@@ -42,17 +42,51 @@ Header:
 Delay.h, stdutils.h, gpioi.h
 
 # PIN DIAGRAM :
- 
-
+~~~
+ <img width="426" height="519" alt="image" src="https://github.com/user-attachments/assets/aed28cc3-caed-4895-a9d8-a985d01e6934" />
+~~~
 # CIRCUIT DIAGRAM:
- 
- 
+~~~
+<img width="1755" height="1365" alt="image" src="https://github.com/user-attachments/assets/3480f745-6626-4900-99a7-62f160a41faf" />
+~~~
+
 # PROGRAM:
+~~~
+#include <LPC17xx.h>
 
+void delay_ms(unsigned int ms)
+{
+    unsigned int i, j;
+    for(i = 0; i < ms; i++)
+        for(j = 0; j < 5000; j++);
+}
 
+int main(void)
+{
+    /* Enable GPIO for PORT0 and PORT1 */
+    LPC_GPIO0->FIODIR |= (1 << 22);  // Configure P0.22 as output (LED1)
+    LPC_GPIO1->FIODIR |= (1 << 18);  // Configure P1.18 as output (LED2)
+    LPC_GPIO1->FIODIR |= (1 << 20);  // Configure P1.20 as output (LED3)
+
+    while(1)
+    {
+        /* Turn ON LEDs */
+        LPC_GPIO0->FIOSET = (1 << 22);   // LED1 ON
+        LPC_GPIO1->FIOSET = (1 << 18);   // LED2 ON
+        LPC_GPIO1->FIOSET = (1 << 20);   // LED3 ON
+        delay_ms(500);
+
+        /* Turn OFF LEDs */
+        LPC_GPIO0->FIOCLR = (1 << 22);   // LED1 OFF
+        LPC_GPIO1->FIOCLR = (1 << 18);   // LED2 OFF
+        LPC_GPIO1->FIOCLR = (1 << 20);   // LED3 OFF
+        delay_ms(500);
+    }
+}
+~~~
  
 # Output:
-
+ Thus the interface and toggle the led with ARM LPC 1768 microprocessor is done
 
 
 
